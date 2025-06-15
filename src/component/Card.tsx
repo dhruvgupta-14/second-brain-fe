@@ -30,7 +30,7 @@ const Card = (props: CardProps) => {
   }
   const deleteContent = async () => {
     try {
-      const response=await axios.delete(`${apiKey}/content/delete/`+props.contentId,{withCredentials:true})
+      await axios.delete(`${apiKey}/content/delete/`+props.contentId,{withCredentials:true})
       toast.success("Content deleted ,please refresh page")
       window.location.reload();
     } catch (e:any) {
