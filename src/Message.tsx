@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
-import { Send, Smile, Paperclip, MoreVertical, Phone, Video, Search } from 'lucide-react';
+import { Send,Search } from 'lucide-react';
 import axios from 'axios';
 import Sidebar from './component/Sidebar';
 import { AuthContext } from './AuthContext';
@@ -88,7 +88,7 @@ const ChatApp = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [otherUserTyping, setOtherUserTyping] = useState(false);
+  // const [otherUserTyping, setOtherUserTyping] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');// search user
@@ -115,11 +115,11 @@ const ChatApp = () => {
           setMessages(prev => [...prev, message]);
         });
 
-        chatService.current.onTyping((data) => {
-          if (activeConversation && data.senderId === activeConversation.user._id) {
-            setOtherUserTyping(data.isTyping);
-          }
-        });
+        // chatService.current.onTyping((data) => {
+        //   if (activeConversation && data.senderId === activeConversation.user._id) {
+        //     setOtherUserTyping(data.isTyping);
+        //   }
+        // });
 
         chatService.current.onConnection((connected) => {
           setIsConnected(connected);

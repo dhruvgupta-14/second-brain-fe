@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./component/Button";
 import Plus from "./icons/Plus";
 import Share from "./icons/Share";
 import Card from "./component/Card";
-import CreateContentModal from "./component/CreateContentModal";
+// import CreateContentModal from "./component/CreateContentModal";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

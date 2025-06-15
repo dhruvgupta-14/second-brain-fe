@@ -1,5 +1,5 @@
 
-import React, { type ReactElement, useState } from 'react'
+import { type ReactElement, useState } from 'react'
 
 interface InputProps {
   type: string,

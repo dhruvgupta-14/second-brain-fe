@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Cancel from '../icons/Cancel';
 import Input from './Input';
 import Select from './Select';

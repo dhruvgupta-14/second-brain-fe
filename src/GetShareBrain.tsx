@@ -1,6 +1,5 @@
 import axios from "axios";
-import { Search } from "lucide-react";
-import React, { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
@@ -10,7 +9,6 @@ const GetShareBrain = () => {
   const apiKey = import.meta.env.VITE_API_KEY
   const { id } = useParams();
   const [content, setContent] = useState([]);
-  const [query, setQuery] = useState("");
   const [Loading, setLoading] = useState(true);
   const fetchShareBrain = async () => {
     try {
@@ -31,35 +29,7 @@ const GetShareBrain = () => {
   useEffect(() => {
     fetchShareBrain();
   }, [id]);
-  const SearchQuery = async () => {
-    setLoading(true);
-    if (query.trim() === "") {
-      fetchShareBrain();
-      return;
-    }
-    try {
-      const response = await axios.post(
-        `${apiKey}/content/search`,
-        {
-          query: query,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      // console.log(response.data.data.hits);
-      const array = response.data.data.hits.map((item: any) => item.fields);
-      // console.log(array);
-      setContent(array);
-      if (response.data.data.length === 0) {
-        toast.error("No content found for the given query");
-      }
-    } catch (e: any) {
-      // console.log(e);
-      toast.error(e.response.data.message || "Error fetching search results");
-    }
-    setLoading(false);
-  };
+
   return (
     <div>
       <header className='fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm'>

@@ -1,7 +1,4 @@
-import React, { use, useState } from "react";
 import Cancel from "../icons/Cancel";
-import Input from "./Input";
-import Select from "./Select";
 import Button from "./Button";
 import axios from "axios";
 import toast from "react-hot-toast";

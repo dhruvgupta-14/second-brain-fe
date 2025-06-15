@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState } from 'react';
 import { X, Link, Type, Tag, FileText, Plus, Loader2 } from 'lucide-react';
 import Input from './Input';
 import Select from './Select';

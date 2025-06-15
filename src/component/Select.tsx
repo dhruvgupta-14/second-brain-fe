@@ -1,5 +1,5 @@
 import React, { type ReactElement, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+
 
 interface SelectProps {
   array: string[],
@@ -16,14 +16,14 @@ interface SelectProps {
 
 const Select = (props: SelectProps) => {
   const [isFocused, setIsFocused] = useState(false)
-  const [hasValue, setHasValue] = useState(!!props.value)
+  // const [hasValue, setHasValue] = useState(!!props.value)
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setHasValue(e.target.value !== "")
-    if (props.onChange) {
-      props.onChange(e)
-    }
-  }
+  // const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setHasValue(e.target.value !== "")
+  //   if (props.onChange) {
+  //     props.onChange(e)
+  //   }
+  // }
   return (
      <div className="flex flex-col gap-1.5 w-full">
        {props.label && (
