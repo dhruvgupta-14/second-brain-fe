@@ -22,7 +22,7 @@ const ShareBrain = (props: ShareProps) => {
       );
       toast.success(response.data.message+" Link copied to clipboard");
       await navigator.clipboard.writeText(
-        `http://localhost:5173/share/${response.data.data}`
+        `https://second-brain-fe-five.vercel.app/share/${response.data.data}`
       );
     } catch (e: any) {
       console.log(e);
