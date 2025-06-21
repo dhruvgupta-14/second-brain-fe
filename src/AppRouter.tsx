@@ -1,13 +1,14 @@
 import { useContext } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import Signup from './Signup'
-import Login from './Login'
-import Home from './Home'
-import GetShareBrain from './GetShareBrain'
+import Home from './page/Home'
 import EditProfile from './component/EditProfile'
-import { AuthContext } from './AuthContext'
+import { AuthContext } from './context/AuthContext'
 import { FadeLoader } from 'react-spinners'
-import ChatApp from './Message'
+import GetShareBrain from './page/GetShareBrain'
+import ChatApp from './page/Message'
+import Signup from './page/Signup'
+import Login from './page/Login'
+
 
 const AppRouter = () => {
   const { isLogin, loading } = useContext(AuthContext)
@@ -48,7 +49,7 @@ const AppRouter = () => {
     <Routes>
       {/* <Route element={<Layout></Layout>} > */}
       <Route path='/' element={isLogin ? <Home></Home> : <Navigate to="/login" />}></Route>
-      <Route path='/edit-profile' element={isLogin ? <EditProfile /> :<Navigate to="/login" />}></Route>
+      <Route path='/edit-profile' element={isLogin ? <EditProfile /> : <Navigate to="/login" />}></Route>
       <Route path='/share/:id' element={<GetShareBrain></GetShareBrain>}></Route>
       <Route path='/chat' element={isLogin ? <ChatApp /> : <Navigate to="/login" />} />
       <Route path='/signup' element={<Signup></Signup>}></Route>

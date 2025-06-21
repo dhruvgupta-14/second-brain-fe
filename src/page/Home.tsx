@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import Button from "./component/Button";
-import Plus from "./icons/Plus";
-import Share from "./icons/Share";
-import Card from "./component/Card";
-// import CreateContentModal from "./component/CreateContentModal";
+import Button from "../component/Button";
+import Plus from "../icons/Plus";
+import Share from "../icons/Share";
+import Card from "../component/Card";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Search } from "lucide-react";
 import { FadeLoader } from "react-spinners";
-import ShareBrain from "./component/Share";
-import Sidebar from "./component/Sidebar";
-import ProModal from "./component/Modal";
+import ShareBrain from "../component/Share";
+import Sidebar from "../component/Sidebar";
+import ProModal from "../component/Modal";
+import FloatingChat from "../component/FloatingChat";
 
 
 const Home = () => {
@@ -29,6 +29,7 @@ const Home = () => {
       const response = await axios.get(`${apiKey}/content`, {
         withCredentials: true,
       });
+      // console.log(response.data.data)
       setContent(response.data.data);
     } catch (e: any) {
       // console.log(e);
@@ -56,8 +57,9 @@ const Home = () => {
           withCredentials: true,
         }
       );
-      // console.log(response.data.data.hits)
+      console.log(response.data.data.hits)
       const array = response.data.data.hits.map((item: any) => item.fields)
+
       setContent(array);
       if (response.data.data.length === 0) {
         toast.error("No content found for the given query");
@@ -71,11 +73,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-
-      {/* <CreateContentModal
-        open={contentModal}
-        onClose={() => setContentModal((prev) => !prev)}
-      ></CreateContentModal> */}
+      <FloatingChat />
       <ProModal open={contentModal} onClose={() => setContentModal((prev) => !prev)} />
       <ShareBrain open={shareOpen} onClose={() => setShareOpen((prev) => !prev)} />
       <Sidebar expanded={isExpanded} setExpanded={setIsExpanded} />
@@ -163,22 +161,22 @@ const Home = () => {
                   <p className="text-gray-600 mb-6">
                     Get started by adding your first piece of content. Share links, images, videos, and more!
                   </p>
-                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition-colors">
+                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition-colors" onClick={() => setContentModal((prev) => !prev)}>
                     Add Content
                   </button>
                 </div>
               </div>
             ) : (
               // Content grid
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {content &&
                   content.map((item: any, index: number) => (
                     <div key={item._id || index} className="w-full">
+
                       <Card
                         contentId={item._id}
-                        type={item.contentType}
+                        category={item.type || item.category}
                         title={item.title}
-                        link={item.link}
                         date={new Date(item.createdAt).toLocaleString("en-IN", {
                           dateStyle: "long",
                           timeStyle: "short",
@@ -191,6 +189,9 @@ const Home = () => {
                               : item.tags.map((tag: any) => tag.title) // array of objects
                             : []
                         }
+                        type={item.contentType}
+                        link={item.link}
+                        content={item.content}
                       />
                     </div>
                   ))}

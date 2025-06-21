@@ -1,9 +1,10 @@
 import axios from "axios";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
-import Card from "./component/Card";
+import Card from "../component/Card";
+
 
 const GetShareBrain = () => {
   const apiKey = import.meta.env.VITE_API_KEY
@@ -68,30 +69,32 @@ const GetShareBrain = () => {
               <strong>Add Content</strong>.
             </p>
           ) : (
-            <div className="flex flex-wrap gap-6 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
               {content &&
                 content.map((item: any, index: number) => (
-                  <Card
-                    key={index}
-                    contentId={item._id}
-                    type={item.contentType}
-                    title={item.title}
-                    link={item.link}
-                    date={new Date(item.createdAt).toLocaleString("en-IN", {
-                      dateStyle: "long",
-                      timeStyle: "short",
-                      timeZone: "Asia/Kolkata",
-                    })}
-                    tags={
-                      Array.isArray(item.tags)
-                        ? typeof item.tags[0] === "string"
-                          ? item.tags // already string array
-                          : item.tags.map((tag: any) => tag.title) // array of objects
-                        : []
-                    }
-                  />
-                ))
-              }
+                  <div key={item._id || index} className="w-full">
+                    <Card
+                      contentId={item._id}
+                      category={item.type || item.category}
+                      title={item.title}
+                      date={new Date(item.createdAt).toLocaleString("en-IN", {
+                        dateStyle: "long",
+                        timeStyle: "short",
+                        timeZone: "Asia/Kolkata",
+                      })}
+                      tags={
+                        Array.isArray(item.tags)
+                          ? typeof item.tags[0] === "string"
+                            ? item.tags // already string array
+                            : item.tags.map((tag: any) => tag.title) // array of objects
+                          : []
+                      }
+                      type={item.contentType}
+                      link={item.link}
+                      content={item.content}
+                    />
+                  </div>
+                ))}
             </div>
           )}
         </div>

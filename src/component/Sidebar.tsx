@@ -12,7 +12,7 @@ import {
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 
 interface SideBarProps {
   expanded: boolean;
@@ -113,7 +113,7 @@ const Sidebar = ({ expanded, setExpanded }: SideBarProps) => {
         <nav className="flex-1 p-2 space-y-1">
           {menuItems.map((item, index) => (
             <div key={index} className="relative group">
-              <button 
+              <button
                 onClick={() => handleNavigate(item.route)}
                 className={`
                   w-full flex items-center space-x-3 px-3 py-3 rounded-xl
@@ -130,7 +130,7 @@ const Sidebar = ({ expanded, setExpanded }: SideBarProps) => {
                   </span>
                 )}
               </button>
-              
+
               {/* Tooltip for collapsed state */}
               {!expanded && (
                 <div className="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50">
@@ -152,10 +152,10 @@ const Sidebar = ({ expanded, setExpanded }: SideBarProps) => {
                 </span>
               </div>
             ) : (
-              <img 
-                src={avatar} 
+              <img
+                src={avatar}
                 alt="User avatar"
-                className='w-10 h-10 border border-gray-700 rounded-full object-cover shadow-sm' 
+                className='w-10 h-10 border border-gray-700 rounded-full object-cover shadow-sm'
               />
             )}
 
@@ -168,8 +168,8 @@ const Sidebar = ({ expanded, setExpanded }: SideBarProps) => {
           </div>
 
           {expanded && (
-            <button 
-              className="w-full mt-3 flex items-center justify-center space-x-2 px-3 py-2 bg-gray-50 text-black border rounded-lg hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl" 
+            <button
+              className="w-full mt-3 flex items-center justify-center space-x-2 px-3 py-2 bg-gray-50 text-black border rounded-lg hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl"
               onClick={Logout}
             >
               <LogOut size={16} />

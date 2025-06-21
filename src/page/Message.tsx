@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { Send,Search } from 'lucide-react';
 import axios from 'axios';
-import Sidebar from './component/Sidebar';
-import { AuthContext } from './AuthContext';
+import { AuthContext } from '../context/AuthContext';
+import Sidebar from '../component/Sidebar';
+
 interface MessagePayload {
   senderId: string;
   receiverId: string;

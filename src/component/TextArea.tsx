@@ -1,8 +1,6 @@
-
 import { type ReactElement, useState } from 'react'
 
-interface InputProps {
-  type: string,
+interface TextAreaProps {
   placeholder: string,
   require?: boolean,
   w?: boolean,
@@ -12,20 +10,20 @@ interface InputProps {
   label?: string,
   value?: string,
   disabled?: boolean,
-  error?: string
+  error?: string,
+  rows?: number
 }
 
-const Input = (props: InputProps) => {
+const TextArea = (props: TextAreaProps) => {
   const [isFocused, setIsFocused] = useState(false)
   const [hasValue, setHasValue] = useState(!!props.value)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e:React.ChangeEvent<HTMLTextAreaElement> ) => {
     setHasValue(e.target.value.length > 0)
     if (props.onChange) {
       props.onChange(e)
     }
   }
-
 
   return (
     <div className="flex flex-col gap-1.5 w-full">
@@ -34,18 +32,18 @@ const Input = (props: InputProps) => {
           {props.label}
         </label>
       )}
-      <div className="relative flex items-center">
+      <div className="relative flex">
         {props.startIcon && (
-          <div className={`absolute left-3 z-10 ${isFocused ? 'text-slate-600' : 'text-slate-400'}`}>
+          <div className={`absolute left-3 top-3 z-10 ${isFocused ? 'text-slate-600' : 'text-slate-400'}`}>
             {props.startIcon}
           </div>
         )}
-        <input
-          type={props.type}
+        <textarea
           placeholder={props.placeholder}
+          rows={props.rows || 4}
           className={`
              w-full px-4 py-3 bg-white border-2 transition-all duration-200 ease-in-out
-             rounded-lg text-gray-800 text-base placeholder:text-gray-400
+             rounded-lg text-gray-800 text-base placeholder:text-gray-400 resize-none
              ${props.startIcon ? 'pl-10' : 'pl-4'}
              ${props.error
               ? 'border-red-200 focus:border-red-400 focus:ring-2 focus:ring-red-100'
@@ -62,9 +60,10 @@ const Input = (props: InputProps) => {
           onChange={handleChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          disabled={props.disabled}
         />
         {props.endIcon && (
-          <div className={`absolute right-3 z-10 ${isFocused ? 'text-slate-600' : 'text-slate-400'}`}>
+          <div className={`absolute right-3 top-3 z-10 ${isFocused ? 'text-slate-600' : 'text-slate-400'}`}>
             {props.endIcon}
           </div>)
         }
@@ -76,4 +75,4 @@ const Input = (props: InputProps) => {
   )
 }
 
-export default Input
+export default TextArea

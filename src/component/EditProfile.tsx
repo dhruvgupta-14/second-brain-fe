@@ -1,15 +1,15 @@
 import { Camera, Loader2, User } from 'lucide-react';
-import  { useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import Input from './Input';
 import Sidebar from './Sidebar';
 import Button from './Button';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../context/AuthContext';
 
 const EditProfile = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
-  const {firstName,avatar}=useContext(AuthContext)
+  const { firstName, avatar } = useContext(AuthContext)
   const [name, setFirstName] = useState(firstName);
   const [tempImage, setTempImage] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -32,22 +32,22 @@ const EditProfile = () => {
     setLoading(true)
     try {
       const formData = new FormData();
-       const fileInput = fileInputRef.current as HTMLInputElement | null;
+      const fileInput = fileInputRef.current as HTMLInputElement | null;
       formData.append('firstName', name);
       console.log(firstName)
       if (fileInput?.files) {
-        formData.append('avatar', fileInput.files[0]); 
+        formData.append('avatar', fileInput.files[0]);
       }
 
       const response = await axios.put(`${apiKey}/edit`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        withCredentials:true
+        withCredentials: true
       });
 
       toast.success(response.data.message)
-    } catch (error:any) {
+    } catch (error: any) {
       console.error('Upload failed:', error);
       toast.error(error.response.data.message)
     }

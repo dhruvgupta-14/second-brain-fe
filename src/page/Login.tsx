@@ -1,15 +1,16 @@
 import { Link, useNavigate } from "react-router-dom"
-import Button from "./component/Button"
-import Input from "./component/Input"
 import { useContext, useState } from "react"
-import User from "./icons/User"
-import HideEye from "./icons/HideEye"
-import Lock from "./icons/Lock"
-import Eye from "./icons/Eye"
 import axios from "axios"
 import toast from "react-hot-toast"
-import { Loader2 } from "lucide-react"
-import { AuthContext } from "./AuthContext"
+import {  Loader2 } from "lucide-react"
+import { AuthContext } from "../context/AuthContext"
+import Input from "../component/Input"
+import Lock from "../icons/Lock"
+import User from "../icons/User"
+import HideEye from "../icons/HideEye"
+import Button from "../component/Button"
+import Eye from "../icons/Eye"
+
 const Login = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const {refreshUser}=useContext(AuthContext)
