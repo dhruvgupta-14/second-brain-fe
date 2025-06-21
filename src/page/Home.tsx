@@ -18,7 +18,7 @@ const Home = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const navigate = useNavigate();
   const [contentModal, setContentModal] = useState(false);
-  const [content, setContent] = useState([]);
+  const [content, setContent] = useState<any>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [query, setQuery] = useState("");
   const [Loading, setLoading] = useState(true);
@@ -57,10 +57,14 @@ const Home = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data.data.hits)
+      if(response){
+      // console.log(response.data.data.hits)
       const array = response.data.data.hits.map((item: any) => item.fields)
-
       setContent(array);
+      }
+
+
+      
       if (response.data.data.length === 0) {
         toast.error("No content found for the given query");
       }
@@ -73,7 +77,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <FloatingChat />
+      <FloatingChat setContent={setContent}/>
       <ProModal open={contentModal} onClose={() => setContentModal((prev) => !prev)} />
       <ShareBrain open={shareOpen} onClose={() => setShareOpen((prev) => !prev)} />
       <Sidebar expanded={isExpanded} setExpanded={setIsExpanded} />
@@ -191,7 +195,7 @@ const Home = () => {
                         }
                         type={item.contentType}
                         link={item.link}
-                        content={item.content}
+                        content={item.content||item.text}
                       />
                     </div>
                   ))}

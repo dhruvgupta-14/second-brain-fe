@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 interface EmbedProps {
   type: 'image' | 'youtube' | 'tweet' | 'instagram' | 'doc' | 'note' | 'upload',
   link?: string,
@@ -62,11 +61,27 @@ export default function Embed(props: EmbedProps) {
   }
 
   if (props.type === "youtube") {
+    const embedLink = `https://www.youtube.com/embed/${props.link?.split('/').pop()?.split('?')[0]}`
     // console.log(props.link)
     return (
-      <div className={`${containerClass} aspect-video h-[400px]`}>
-        <iframe width="560" height="315" src={props.link} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+      <div className={`${containerClass} aspect-video relative`}>
+        <iframe
+          className="w-full h-full border-0"
+          title="YouTube video player"
+          aria-label="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          src={embedLink}
+        />
+
+        {/* Transparent overlay to redirect */}
+        <div
+          onClick={() => window.open(props.link, '_blank')}
+          className="absolute inset-0 z-10 cursor-pointer"
+          title="Open in YouTube"
+        />
       </div>
+
     );
   }
 
@@ -108,47 +123,47 @@ export default function Embed(props: EmbedProps) {
     );
   }
 
-if (props.type === "upload") {
-  const isImage = props.link?.match(/\.(jpg|jpeg|png|gif|webp)$/i);
-  const isPDF = props.link?.match(/\.pdf$/i);
+  if (props.type === "upload") {
+    const isImage = props.link?.match(/\.(jpg|jpeg|png|gif|webp)$/i);
+    const isPDF = props.link?.match(/\.pdf$/i);
 
-  return (
-    <div className={`${containerClass} p-6`}>
-      <div className="text-center">
-        {isImage ? (
-          <img
-            src={props.link}
-            alt="Uploaded Image"
-            className="w-full max-w-xs mx-auto rounded shadow-md mb-4"
-          />
-        ) : isPDF ? (
-          <iframe
-            src={props.link}
-            className="w-full max-w-md h-64 mx-auto border rounded mb-4"
-            title="PDF Preview"
-          />
-        ) : (
-          <div className="text-green-600 text-6xl mb-4">📁</div>
-        )}
+    return (
+      <div className={`${containerClass} p-6`}>
+        <div className="text-center">
+          {isImage ? (
+            <img
+              src={props.link}
+              alt="Uploaded Image"
+              className="w-full max-w-xs mx-auto rounded shadow-md mb-4"
+            />
+          ) : isPDF ? (
+            <iframe
+              src={props.link}
+              className="w-full max-w-md h-64 mx-auto border rounded mb-4"
+              title="PDF Preview"
+            />
+          ) : (
+            <div className="text-green-600 text-6xl mb-4">📁</div>
+          )}
 
-        <div className="text-lg font-semibold text-gray-800 mb-2">Uploaded File</div>
+          <div className="text-lg font-semibold text-gray-800 mb-2">Uploaded File</div>
 
-        <a
-          href={props.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:text-blue-700 underline break-all text-sm px-4 py-2 bg-blue-50 rounded-lg inline-block"
-        >
-          Open File
-        </a>
+          <a
+            href={props.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700 underline break-all text-sm px-4 py-2 bg-blue-50 rounded-lg inline-block"
+          >
+            Open File
+          </a>
 
-        <div className="mt-4 text-sm text-gray-500">
-          Click to view the uploaded file
+          <div className="mt-4 text-sm text-gray-500">
+            Click to view the uploaded file
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 
   // Fallback for unknown types

@@ -75,25 +75,28 @@ const Card = (props: CardProps) => {
   return (
     <div className='flex flex-col bg-white shadow-lg border border-gray-200 rounded-xl overflow-hidden max-w-2xl mx-auto'>
       {/* Header */}
-      <div className='flex justify-between items-center p-4 border-b border-gray-100 overflow-x-scroll'>
-        <div className="flex items-center">
+      {/* Header */}
+      <div className='flex justify-between items-center p-4 border-b border-gray-100'>
+        {/* Title with smooth scroll on hover */}
+        <div className="flex items-center overflow-hidden w-full">
           {getIcon(props.type)}
-          <h1 className="font-bold text-xl text-gray-800 truncate flex-1 ">
-            {props.title}
-          </h1>
+          <div className="relative overflow-hidden max-w-xs sm:max-w-md md:max-w-lg">
+            <div className="whitespace-nowrap animate-scroll-on-hover text-xl font-bold text-gray-800 pl-2">
+              {props.title}
+            </div>
+          </div>
         </div>
 
-        <div className='flex gap-1'>
-          {
-            props.link && <button
+        <div className='flex gap-1 ml-2 shrink-0'>
+          {props.link && (
+            <button
               onClick={copyLink}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               title="Share"
             >
               <Share />
             </button>
-          }
-
+          )}
           <button
             onClick={deleteContent}
             className="p-2 hover:bg-red-50 rounded-lg transition-colors"
@@ -104,14 +107,14 @@ const Card = (props: CardProps) => {
         </div>
       </div>
 
+
       {/* Content */}
       <div className='flex-1 p-6'>
         <Embed
           content={props.content}
           type={props.type}
-          link={props.type === "youtube"
-            ? `https://www.youtube.com/embed/${props.link?.split('/').pop()?.split('?')[0]}`
-            : props.type === "tweet"
+          link={
+               props.type === "tweet"
               ? props.link?.replace("x.com", "twitter.com")
               : props.link
           }

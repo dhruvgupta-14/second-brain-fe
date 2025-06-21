@@ -1,2 +1,11 @@
 @import "tailwindcss";
+@layer utilities {
+  .animate-scroll-on-hover {
+    display: inline-block;
+    transition: transform 5s linear;
+  }
 
+  .animate-scroll-on-hover:hover {
+    transform: translateX(-100%);
+  }
+}

@@ -9,6 +9,7 @@ import {
   Loader2,
   Edit3,
   Image,
+  Sparkles,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -34,7 +35,8 @@ const ProModal = (props: CreateContentModalProps) => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [activeTab, setActiveTab] = useState("link");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [suggestedTitle, setSuggestedTitle] = useState('')
+  const [isGenerating, setIsGenerating] = useState(false)
   const [linkTitle, setLinkTitle] = useState("");
   const [link, setLink] = useState("");
   const [linkType, setLinkType] = useState("");
@@ -76,6 +78,28 @@ const ProModal = (props: CreateContentModalProps) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const GenerateTitle = async () => {
+    if (noteContent.length < 20) {
+      toast.error("Insufficient Content to Generate")
+    }
+    setIsGenerating(true)
+    try {
+      const response = await axios.post(`${apiKey}/ask/ai/title`, { query: noteContent }, { withCredentials: true })
+      setSuggestedTitle(response.data.title)
+    } catch (e) {
+      console.error('Error generating title:', e)
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+  const acceptSuggestion = () => {
+    setNoteTitle(suggestedTitle)
+    setSuggestedTitle('')
+  }
+
+  const rejectSuggestion = () => {
+    setSuggestedTitle('')
+  }
   const submitHandler = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -156,6 +180,7 @@ const ProModal = (props: CreateContentModalProps) => {
       case "link":
         return (
           <div className="space-y-5">
+
             <Input
               type="text"
               placeholder="Enter a descriptive title"
@@ -166,6 +191,8 @@ const ProModal = (props: CreateContentModalProps) => {
               startIcon={<Type size={18} />}
               error={errors.title}
             />
+
+
             <Input
               type="url"
               placeholder="https://example.com"
@@ -202,16 +229,6 @@ const ProModal = (props: CreateContentModalProps) => {
       case "note":
         return (
           <div className="space-y-5">
-            <Input
-              type="text"
-              placeholder="Enter note title"
-              label="Title"
-              value={noteTitle}
-              onChange={(e) => setNoteTitle(e.target.value)}
-              require={true}
-              startIcon={<Type size={18} />}
-              error={errors.title}
-            />
             <TextArea
               placeholder="Write your note content here..."
               label="Content"
@@ -222,6 +239,62 @@ const ProModal = (props: CreateContentModalProps) => {
               error={errors.content}
               rows={6}
             />
+            <div className="space-y-2">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Enter note title"
+                  label="Title"
+                  value={noteTitle}
+                  onChange={(e) => setNoteTitle(e.target.value)}
+                  require={true}
+                  startIcon={<Type size={18} />}
+                  error={errors.title}
+                />
+              </div>
+
+              {/* Suggestion controls */}
+              <div className="flex items-center  gap-2">
+                <button
+                  onClick={GenerateTitle}
+                  disabled={isGenerating || noteContent.length < 20}
+                  className="flex items-center gap-1 px-3 py-1 text-sm bg-purple-500 text-white rounded hover:bg-purple-600 disabled:opacity-50"
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles size={14} />
+                      Suggest Title
+                    </>
+                  )}
+                </button>
+
+                {suggestedTitle && (
+                  <div className="flex items-center gap-2 ">
+                    <span className="text-gray-400 text-[10px]">Suggestion:</span>
+                    <span className="font-medium text-xs text-gray-600 max-w-xs ">
+                      {suggestedTitle}
+                    </span>
+                    <button
+                      onClick={acceptSuggestion}
+                      className="px-2 py-1 text- rounded text-[10px] hover:bg-gray-400"
+                    >
+                      ✓ Accept
+                    </button>
+                    <button
+                      onClick={rejectSuggestion}
+                      className="px-2 py-1 rounded text-[10px] hover:bg-gray-600"
+                    >
+                      ✗ Reject
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
             <Input
               type="text"
               placeholder="personal, ideas, thoughts"
@@ -285,7 +358,7 @@ const ProModal = (props: CreateContentModalProps) => {
       />
 
       {/* Modal Content */}
-      <div className="relative z-50 w-full max-w-lg bg-white rounded-2xl shadow-2xl transition-all duration-300">
+      <div className="relative z-50 w-full max-w-xl bg-white rounded-2xl shadow-2xl transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="flex items-center gap-3">
@@ -316,11 +389,10 @@ const ProModal = (props: CreateContentModalProps) => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex-1 ${
-                    activeTab === tab.id
-                      ? "bg-white text-purple-600 shadow-sm"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
+                  className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex-1 ${activeTab === tab.id
+                    ? "bg-white text-purple-600 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                    }`}
                 >
                   <Icon size={16} />
                   {tab.label}

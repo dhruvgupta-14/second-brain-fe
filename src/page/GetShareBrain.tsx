@@ -91,7 +91,7 @@ const GetShareBrain = () => {
                       }
                       type={item.contentType}
                       link={item.link}
-                      content={item.content}
+                      content={item.content||item.text}
                     />
                   </div>
                 ))}
