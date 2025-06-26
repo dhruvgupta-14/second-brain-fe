@@ -1,54 +1,41 @@
-# React + TypeScript + Vite
+# Your Second Brain
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Store, search, and interact with your informational content using AI.**
 
-Currently, two official plugins are available:
+## 🚀 Features
+- 🔗 Save YouTube, Instagram, Tweet, Docs, Images Links
+- 📝 Write and save personal notes
+- 🧠 Semantic Search powered by OpenAI Embeddings
+- 🤖 Chatbot to query your saved content
+- 📁 Upload documents & images
+- 🌐 Dynamic rendering based on content type
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Why I Built This
+I often sent myself links or notes on WhatsApp, but they got lost. So I built MyBrain — a focused tool to store, search, and organize useful content that isn’t private enough for a vault, but too important to forget.
 
-## Expanding the ESLint configuration
+## 🧱 Tech Stack
+- **Frontend**: React, Tailwind CSS, Tailwind
+- **Backend**: Node.js, Express, TypeScript
+- **Database**: MongoDB, Azure Blob Storage, Pinecone
+- **AI**: OpenAI + Vector Search (Pinecone)
+- **Authentication**: JWT,Bcrypt.js
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## To Run this app locally you need to clone both frontend and backend 
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📦 How to Run Locally Frontend
+git clone https://github.com/dhruvgupta-14/second-brain-fe (for Frontend)
+cd second-brain-fe
+npm install
+# Setup .env based on .env.example
+git clone https://github.com/dhruvgupta-14/second-brain-fe (for Backend)
+cd second-brain-be 
+npm install 
+# Setup .env based on .env.example
+npm run dev
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 📦 How to Run Locally Frontend
+git clone https://github.com/dhruvgupta-14/second-brain-fe (for Frontend)
+cd second-brain-fe
+npm install
+# Setup .env based on .env.example
+npm run dev
