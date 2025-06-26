@@ -26,16 +26,13 @@ I often sent myself links or notes on WhatsApp, but they got lost. So I built My
 git clone https://github.com/dhruvgupta-14/second-brain-fe (for Frontend)
 cd second-brain-fe
 npm install
-# Setup .env based on .env.example
-git clone https://github.com/dhruvgupta-14/second-brain-fe (for Backend)
+Setup .env based on .env.example
+
+## 📦 How to Run Locally Backend
+git clone https://github.com/dhruvgupta-14/second-brain-be (for Backend)
 cd second-brain-be 
 npm install 
-# Setup .env based on .env.example
+Setup .env based on .env.example
 npm run dev
 
-## 📦 How to Run Locally Frontend
-git clone https://github.com/dhruvgupta-14/second-brain-fe (for Frontend)
-cd second-brain-fe
-npm install
-# Setup .env based on .env.example
-npm run dev
+
